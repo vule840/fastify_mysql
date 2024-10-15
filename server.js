@@ -68,10 +68,10 @@ fastify.get("/", (request, reply) => {
 }, async (request, reply) => {
   return { message: 'JWT verification passed!', user: request.user };
 }); */
-
 const start = async () => {
   try {
-    await fastify.listen({ port: 3000 });
+    await fastify.listen({ port: 3000, host: '0.0.0.0' });
+    console.log('Server started on http://127.0.0.1:3000');
   } catch (err) {
     fastify.log.error(err);
     process.exit(1);

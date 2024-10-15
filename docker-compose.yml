@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  fastify:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: mysql
+      DB_USER: root
+      DB_PASSWORD: test123
+      DB_NAME: db_test
+      DB_PORT: 3306
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: test123
+      MYSQL_DATABASE: db_test
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init:/docker-entrypoint-initdb.d  # Mounting the init directory
+
+volumes:
+  mysql_data:
